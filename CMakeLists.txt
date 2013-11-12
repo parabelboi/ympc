@@ -86,3 +86,9 @@ target_link_libraries(ympc ${CMAKE_THREAD_LIBS_INIT})
 
 install(TARGETS ympc DESTINATION bin)
 install(FILES ympc.1 DESTINATION ${CMAKE_INSTALL_PREFIX}/share/man/man1)
+install(DIRECTORY htdocs DESTINATION share/${PROJECT_NAME})
+install(FILES contrib/init.debian DESTINATION /etc/init.d
+    PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE
+    WORLD_READ WORLD_EXECUTE CONFIGURATIONS debrelease RENAME ${PROJECT_NAME})
+install(FILES contrib/default.debian DESTINATION /etc/default/${PROJECT_NAME}
+    CONFIGURATIONS debrelease RENAME ${PROJECT_NAME})
