@@ -25,6 +25,7 @@ file(GLOB RESOURCES
 	htdocs/assets/*
 	htdocs/css/*.min.css
 	htdocs/fonts/*
+	htdocs/mpd/*
 	htdocs/index.html
 )
 
@@ -38,16 +39,16 @@ add_custom_command(OUTPUT ${PROJECT_BINARY_DIR}/assets.c
 )
 
 set(SOURCES
-    src/ympd.c
+    src/ympc.c
     src/http_server.c
-    src/mpd_client.c
+    src/mpd/mpd_client.c
     src/mongoose.c
     src/json_encode.c
     assets.c
 )
 
-add_executable(ympd ${SOURCES})
-target_link_libraries(ympd ${LIBMPDCLIENT_LIBRARY} ${CMAKE_THREAD_LIBS_INIT})
+add_executable(ympc ${SOURCES})
+target_link_libraries(ympc ${LIBMPDCLIENT_LIBRARY} ${CMAKE_THREAD_LIBS_INIT})
 
-install(TARGETS ympd DESTINATION bin)
-install(FILES ympd.1 DESTINATION ${CMAKE_INSTALL_PREFIX}/share/man/man1)
+install(TARGETS ympc DESTINATION bin)
+install(FILES ympc.1 DESTINATION ${CMAKE_INSTALL_PREFIX}/share/man/man1)

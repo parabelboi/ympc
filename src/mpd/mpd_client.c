@@ -25,7 +25,7 @@
 
 #include "mpd_client.h"
 #include "config.h"
-#include "json_encode.h"
+#include "../json_encode.h"
 
 const char * mpd_cmd_strs[] = {
     MPD_CMDS(GEN_STR)

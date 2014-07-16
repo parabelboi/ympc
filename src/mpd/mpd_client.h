@@ -19,7 +19,7 @@
 #ifndef __MPD_CLIENT_H__
 #define __MPD_CLIENT_H__
 
-#include "mongoose.h"
+#include "../mongoose.h"
 
 #define RETURN_ERROR_AND_RECOVER(X) do { \
     fprintf(stderr, "MPD X: %s\n", mpd_connection_get_error_message(mpd.conn)); \

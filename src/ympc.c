@@ -1,5 +1,6 @@
-/* ympd
+/* ympc
    (c) 2013-2014 Andrew Karpow <andy@ndyk.de>
+   (c) 2013-2014 Christian Krafft <parabelboi@gmail.com>
    This project's homepage is: http://www.ympd.org
    
    This program is free software; you can redistribute it and/or modify
@@ -26,7 +27,7 @@
 
 #include "mongoose.h"
 #include "http_server.h"
-#include "mpd_client.h"
+#include "mpd/mpd_client.h"
 #include "config.h"
 
 extern char *optarg;
@@ -88,10 +89,11 @@ int main(int argc, char **argv)
                 run_as_user = strdup(optarg);
                 break;
             case 'v':
-                fprintf(stdout, "ympd  %d.%d.%d\n"
+                fprintf(stdout, "ympc  %d.%d.%d\n"
                         "Copyright (C) 2014 Andrew Karpow <andy@ndyk.de>\n"
+                        "Copyright (C) 2014 Christian Krafft <parabelboi@gmail.com>\n"
                         "built " __DATE__ " "__TIME__ " ("__VERSION__")\n",
-                        YMPD_VERSION_MAJOR, YMPD_VERSION_MINOR, YMPD_VERSION_PATCH);
+                        YMPC_VERSION_MAJOR, YMPC_VERSION_MINOR, YMPC_VERSION_PATCH);
                 return EXIT_SUCCESS;
                 break;
             default:
