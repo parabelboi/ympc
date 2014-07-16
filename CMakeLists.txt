@@ -29,6 +29,7 @@ file(GLOB RESOURCES
 	htdocs/css/*.min.css
 	htdocs/css/*.css
 	htdocs/fonts/*
+	htdocs/mpd/*
 	htdocs/index.html
 	htdocs/mycert.pem
 	htdocs/myreq.pem
@@ -92,3 +93,4 @@ install(FILES contrib/init.debian DESTINATION /etc/init.d
     WORLD_READ WORLD_EXECUTE CONFIGURATIONS debrelease RENAME ${PROJECT_NAME})
 install(FILES contrib/default.debian DESTINATION /etc/default/${PROJECT_NAME}
     CONFIGURATIONS debrelease RENAME ${PROJECT_NAME})
+
