@@ -30,6 +30,7 @@ Usage: ./ympc [OPTION]...
 
  -c, --url <url>            use alternative url to bootstrap services
  -l, --listen [ip:]<port>   listen on address, defaults to 127.0.0.1:8000
+ -k, --cert ssl_cert.pem	path to certificate
  -u, --user <username>      drop priviliges to user after socket bind
  -V, --version              get version
  --help                     this help
