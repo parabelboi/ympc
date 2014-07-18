@@ -6,9 +6,9 @@ set(CPACK_PACKAGE_VERSION_MAJOR "1")
 set(CPACK_PACKAGE_VERSION_MINOR "2")
 set(CPACK_PACKAGE_VERSION_PATCH "2")
 
-option(WITH_MPD_HOST_CHANGE "Let users of the web frontend change the MPD Host" ON)
+option(WITH_REG_URL_CHANGE "Let users of the web frontend change the bootstrap url" ON)
+option(WITH_REG_CONNECT "Let ympc keep track of the online status of the service registry" ON)
 
-find_package(LibMPDClient REQUIRED)
 find_package(Threads REQUIRED)
 
 configure_file(src/config.h.in ${PROJECT_BINARY_DIR}/config.h)
@@ -24,16 +24,27 @@ file(GLOB RESOURCES
 	htdocs/js/*
 	htdocs/assets/*
 	htdocs/css/*.min.css
+	htdocs/css/*.css
 	htdocs/fonts/*
-	htdocs/mpd/*
 	htdocs/index.html
+	htdocs/git.log
+	htdocs/git.diff
+	htdocs/mycert.pem
+	htdocs/myreq.pem
 )
 
 add_executable(mkdata htdocs/mkdata.c)
 get_target_property(MKDATA_EXE mkdata LOCATION)
 
 add_custom_command(OUTPUT ${PROJECT_BINARY_DIR}/assets.c
-    COMMAND ${MKDATA_EXE} ${RESOURCES} > ${PROJECT_BINARY_DIR}/assets.c
+	COMMAND openssl x509 -noout -text -in mycert.pem || openssl req -x509 -nodes -days 365 -subj '/O=ympc/OU='`git describe`'/CN=example.com' -newkey rsa:1024 -keyout mycert.pem -out mycert.pem && openssl x509 -noout -text -in mycert.pem
+	COMMAND openssl req -noout -text -in myreq.pem || openssl req -new -newkey rsa:1024 -nodes -subj '/O=ympc/OU='`git describe`'/CN=hostname.example.com' -keyout mykey.pem -out myreq.pem && openssl req -noout -text -in myreq.pem
+	COMMAND openssl req -in myreq.pem -noout -verify -key mykey.pem
+	COMMAND openssl x509 -text -in mycert.pem > htdocs/mycert.pem
+	COMMAND openssl req -text -in myreq.pem > htdocs/myreq.pem
+	COMMAND git log > htdocs/git.log
+	COMMAND git diff > htdocs/git.diff
+	COMMAND ${MKDATA_EXE} ${RESOURCES} > ${PROJECT_BINARY_DIR}/assets.c
     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
     DEPENDS ${RESOURCES} mkdata
 )
@@ -41,7 +52,7 @@ add_custom_command(OUTPUT ${PROJECT_BINARY_DIR}/assets.c
 set(SOURCES
     src/ympc.c
     src/http_server.c
-    src/mpd/mpd_client.c
+    src/registry.c
     src/mongoose.c
     src/json_encode.c
     assets.c

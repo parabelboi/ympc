@@ -15,7 +15,7 @@
   <link href="css/bootstrap-theme.min.css" rel="stylesheet">
 
   <!-- Custom styles for this template -->
-  <link href="mpd/mpd.min.css" rel="stylesheet">
+  <link href="css/reg.css" rel="stylesheet">
   <link href="assets/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
 
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -39,18 +39,17 @@
       <div class="collapse navbar-collapse">
 
         <ul id="nav_links" class="nav navbar-nav">
-          <li id="queue"><a href="#/">Queue</a></li>
-          <li id="browse"><a href="#/browse/0/">Browse database</a></li>
-          <li><a href="#" data-toggle="modal" data-target="#settings" onclick="getHost();">Settings</a></li>
+          <li><a href="#" data-toggle="modal" data-target="#settings" onclick="getUrl();">Settings</a></li>
         </ul>
-
+<!-- 
         <form id="search" class="navbar-form navbar-right" role="search">
           <div class="form-group">
             <input type="text" class="form-control" placeholder="Search">
          </div>
         </form>
+-->
         <div class="btn-toolbar navbar-btn navbar-right" role="toolbar">
-          
+<!--          
           <div class="btn-group">
             <button type="button" class="btn btn-default" onclick="socket.send('MPD_API_SET_PREV');">
               <span class="glyphicon glyphicon-backward"></span>
@@ -69,6 +68,7 @@
               <div id="volumeslider"></div>
             </div>
           </div>
+
           
           <audio id="player" preload="none" src="http://mpd:8000/mpd.ogg"></audio>
           <div class="btn-group">
@@ -83,6 +83,7 @@
               <div id="localvolumeslider"></div>
             </div>
           </div>
+-->
           
         </div>
       </div><!--/.nav-collapse -->
@@ -94,10 +95,14 @@
 
       <div class="col-md-10 col-xs-12">
         <div class="notifications top-right"></div>
-        
+
+<!--         
         <div class="panel panel-primary">
+-->
           <!-- Default panel contents -->
+<!-- 
           <div class="panel-heading"><b id="panel-heading">Queue</b></div>
+
           <div class="panel-body">
             <h1>
               <span id="track-icon" class="glyphicon glyphicon-play"></span>
@@ -112,12 +117,15 @@
             <div id="progressbar"></div>
 
 
-          </div><!-- /.panel-body -->
+          </div> --> <!-- /.panel-body -->
 
+<!-- 
           <ol id="breadcrump" class="breadcrumb">
           </ol>
-
+ -->
+ 
           <!-- Table -->
+          <!--
           <table id="salamisandwich" class="table table-hover">
             <thead>
               <tr>
@@ -130,15 +138,21 @@
             <tbody>
             </tbody>
           </table>
-        </div><!-- /.panel -->
+          -->
+          
+<!--    </div>  -->
+		<!-- /.panel -->
+<!--         
         <ul class="pager">
           <li id="prev" class="page-btn hide"><a href="">Previous</a></li>
           <li id="next" class="page-btn"><a href="">Next</a></li>
         </ul>
+-->
       </div><!-- /.col-md-10 -->
 
       <div class="col-md-2 col-xs-12" >
         <div class="btn-toolbar">
+<!--           
           <div class="btn-group-vertical btn-block btn-group-lg" data-toggle="buttons">
             <button id="btnrandom" type="button" class="btn btn-default">
               <span class="glyphicon glyphicon-random"></span> Random
@@ -153,14 +167,17 @@
               <span class="glyphicon glyphicon-repeat"></span> Repeat
             </button>
           </div>
+-->
 
           <div id="btn-responsive-block" class="btn-group-vertical btn-block btn-group-lg">
+<!--          
             <button type="button" class="btn btn-default" onclick="updateDB();">
               <span class="glyphicon glyphicon-refresh"></span> Update DB
             </button>
             <button type="button" class="btn btn-default" onclick="socket.send('MPD_API_RM_ALL');">
               <span class="glyphicon glyphicon-trash"></span> Clear queue
             </button>
+-->
           </div>
 
   	      <div id="btn-responsive-block" class="btn-group-vertical btn-block btn-group-lg" data-toggle="buttons">
@@ -181,44 +198,30 @@
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
           <h2 class="modal-title" id="settingsLabel"><span class="glyphicon glyphicon-wrench"></span> Settings</h2>
         </div>
-        <div class="modal-body">
-          <h4><a href="http://www.ympd.org"><span class="glyphicon glyphicon-play-circle"></span> ympc</a>&nbsp;&nbsp;&nbsp;<small>Generic Web GUI - written in C, utilizing Websockets and Bootstrap/JS</small></h4>
+        <div class="modal-body">          
           <p>
-          ympc is a lightweight web client that runs without a dedicated webserver or interpreters like PHP, NodeJS or Ruby. It's tuned for minimal resource usage and requires only very litte dependencies.</p>
-          <h5>ympc uses following excellent software:</h5>
-          <h6><a href="http://cesanta.com/docs.html">Mongoose</a> <small>GPLv2</small></h6>
-          <h6><a href="http://www.musicpd.org/libs/libmpdclient/">libMPDClient</a> <small>BSD License</small></h6>
+          Service Center</p>
           <hr />
           <form role="form">
+            <label class="control-label" for="BootstrapUrl">bootstrap url</label>
             <div class="row">
               <div class="form-group col-md-9">
-                <label class="control-label" for="mpdhost">MPD Host/IP</label>
-                <input type="text" class="form-control" id="mpdhost" />
-              </div>
-              <div class="form-group col-md-3">
-                <label class="control-label" for="mpdport">MPD Port</label>
-                <input type="text" class="form-control" id="mpdport" />
+                <input type="text" class="form-control" id="url" />
               </div>
             </div>
-            <div class="row">
-              <div class="form-group col-md-6">
-                <label class="control-label" for="mpd_pw">MPD Password</label>
-                <input type="password" class="form-control" id="mpd_pw" placeholder="Password"/>
-              </div>
-              <div class="form-group col-md-6">
-                <label class="control-label" for="mpd_pw_con">MPD Password (Confirmation)</label>
-                <input type="password" class="form-control" id="mpd_pw_con"  placeholder="Password confirmation"
-                data-placement="right" data-toggle="popover" data-content="Password does not match!"
-                data-trigger="manual" />
-              </div>
-              <div class="form-group col-md-12">
-                <div id="mpd_password_set" class="hide alert alert-info">
-                  <button type="button" class="close" aria-hidden="true">&times;</button>
-                  MPD Password is set
-                </div>
-              </div>
-
-            </div>
+            <table id="services" class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>ServiceUrl</th>
+                  <th>ResourceUrl</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+          </table>
           </form>
         </div>
         <div class="modal-footer">
@@ -228,6 +231,7 @@
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
+
 
   <div class="modal fade bs-example-modal-sm" id="wait" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-hidden="true">
     <div class="modal-dialog">
@@ -256,6 +260,7 @@
   <script src="js/bootstrap-notify.js"></script>
   <script src="js/bootstrap-slider.js"></script>
   <script src="js/sammy.js"></script>
-  <script src="mpd/mpd.js"></script>
+  <script src="js/datajs-1.1.2.js"></script>
+  <script src="js/reg.js"></script>
 </body>
 </html>

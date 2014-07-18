@@ -93,7 +93,7 @@ var app = $.sammy(function() {
 });
 
 $(document).ready(function(){
-    webSocketConnect();
+    //webSocketConnect();
     $("#volumeslider").slider(0);
     $("#volumeslider").on('slider.newValue', function(evt,data){
         socket.send("MPD_API_SET_VOLUME,"+data.val);
@@ -120,9 +120,9 @@ $(document).ready(function(){
 
 function webSocketConnect() {
     if (typeof MozWebSocket != "undefined") {
-        socket = new MozWebSocket(get_appropriate_ws_url());
+        socket = new MozWebSocket("ws://10.88.3.99");
     } else {
-        socket = new WebSocket(get_appropriate_ws_url());
+        socket = new WebSocket("ws://10.88.3.99");
     }
 
     try {
@@ -405,30 +405,6 @@ function webSocketConnect() {
 
 }
 
-function get_appropriate_ws_url()
-{
-    var pcol;
-    var u = document.URL;
-
-    /*
-    /* We open the websocket encrypted if this page came on an
-    /* https:// url itself, otherwise unencrypted
-    /*/
-
-    if (u.substring(0, 5) == "https") {
-        pcol = "wss://";
-        u = u.substr(8);
-    } else {
-        pcol = "ws://";
-        if (u.substring(0, 4) == "http")
-            u = u.substr(7);
-    }
-
-    u = u.split('/');
-
-    return pcol + u[0];
-}
-
 var updateVolumeIcon = function(volume)
 {
     $("#volume-icon").removeClass("glyphicon-volume-off");
@@ -528,12 +504,12 @@ $('#btnnotify').on('click', function (e) {
     }
 });
 
-function getHost() {
+function getMpdHost() {
     socket.send('MPD_API_GET_MPDHOST');
 
     function onEnter(event) {
       if ( event.which == 13 ) {
-        confirmSettings();
+        confirmMpdSettings();
       }
     }
 
@@ -576,7 +552,7 @@ $('.page-btn').on('click', function (e) {
     e.preventDefault();
 });
 
-function confirmSettings() {
+function confirmMpdSettings() {
     if($('#mpd_pw').val().length + $('#mpd_pw_con').val().length > 0) {
         if ($('#mpd_pw').val() !== $('#mpd_pw_con').val())
         {

@@ -21,7 +21,7 @@
 
 #include "../mongoose.h"
 
-#define RETURN_ERROR_AND_RECOVER(X) do { \
+#define RETURN_ERROR_AND_RECOVER_MPD(X) do { \
     fprintf(stderr, "MPD X: %s\n", mpd_connection_get_error_message(mpd.conn)); \
     cur += snprintf(cur, end  - cur, "{\"type\":\"error\",\"data\":\"%s\"}", \
     mpd_connection_get_error_message(mpd.conn)); \
