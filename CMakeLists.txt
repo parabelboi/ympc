@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.6)
 
-project (ympd)
+project (jmpd)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake/")
 set(CPACK_PACKAGE_VERSION_MAJOR "1")
 set(CPACK_PACKAGE_VERSION_MINOR "2")
@@ -9,7 +9,7 @@ set(CPACK_PACKAGE_VERSION_PATCH "2")
 set(SSL_KEY "NOT_GIVEN" CACHE STRING "path to signing key for ssl key generation")
 
 option(WITH_REG_URL_CHANGE "Let users of the web frontend change the bootstrap url" OFF)
-option(WITH_REG_CONNECT "Let ympc keep track of the online status of the service registry" OFF)
+option(WITH_REG_CONNECT "Let jmpd keep track of the online status of the service registry" OFF)
 
 find_package(Threads REQUIRED)
 
@@ -59,8 +59,8 @@ set(SOURCES
     assets.c
 )
 
-add_executable(ympc ${SOURCES})
-target_link_libraries(ympc ${LIBMPDCLIENT_LIBRARY} ${CMAKE_THREAD_LIBS_INIT})
+add_executable(jmpd ${SOURCES})
+target_link_libraries(jmpd ${LIBMPDCLIENT_LIBRARY} ${CMAKE_THREAD_LIBS_INIT})
 
-install(TARGETS ympc DESTINATION bin)
+install(TARGETS jmpd DESTINATION bin)
 install(FILES ympc.1 DESTINATION ${CMAKE_INSTALL_PREFIX}/share/man/man1)

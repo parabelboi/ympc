@@ -1,7 +1,7 @@
-/* ympc
+/* jmpd
    (c) 2013-2014 Andrew Karpow <andy@ndyk.de>
    (c) 2014 Christian Krafft <parabelboi@gmail.com>
-   This project's homepage is: http://www.ympd.org
+   This project's homepage is: http://www.jmpd.eu
    
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -39,10 +39,10 @@ function webSocketConnect() {
 
 	try {
 		socket.onopen = function() {
-			console.log("connected to ympc");
+			console.log("connected to jmpd");
 			$('.top-right').notify({
 				message : {
-					text : "Connected to ympc daemon"
+					text : "Connected to jmpd daemon"
 				},
 				fadeOut : {
 					enabled : true,
@@ -71,7 +71,7 @@ function webSocketConnect() {
 				if ($('.top-right').has('div').length == 0)
 					$('.top-right').notify({
 						message : {
-							text : "ympc lost connection to service registry "
+							text : "jmpd lost connection to service registry "
 						},
 						type : "danger",
 						fadeOut : {
@@ -97,10 +97,10 @@ function webSocketConnect() {
 		}
 
 		socket.onclose = function() {
-			console.log("disconnected from ympc");
+			console.log("disconnected from jmpd");
 			$('.top-right').notify({
 				message : {
-					text : "Connection to ympc lost, retrying in 3 seconds "
+					text : "Connection to jmpd lost, retrying in 3 seconds "
 				},
 				type : "danger",
 				onClose : function() {

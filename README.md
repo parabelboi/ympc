@@ -3,9 +3,9 @@ jmpd
 
 Standalone Web Service GUI written in C, utilizing Websockets and Bootstrap/JS
 
-http://www.jmpc.org
+http://www.jmpd.eu
 
-![ScreenShot](http://www.ympd.org/assets/ympd_github.png)
+![ScreenShot](http://www.jmpd.eu/assets/github/jmpd.png)
 
 Dependencies
 ------------

@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  ******************************************************************************/
-package net.jmpd.service.model;
+package eu.jmpd.service.model;
 
 import org.apache.olingo.odata2.api.annotation.edm.EdmEntitySet;
 import org.apache.olingo.odata2.api.annotation.edm.EdmEntityType;

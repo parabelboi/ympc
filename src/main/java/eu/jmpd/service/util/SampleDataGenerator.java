@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  ******************************************************************************/
-package net.jmpd.service.util;
+package eu.jmpd.service.util;
 
 import org.apache.olingo.odata2.api.commons.HttpStatusCodes;
 import org.slf4j.Logger;

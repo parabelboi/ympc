@@ -21,7 +21,7 @@
 	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	id="WebApp_ID" version="2.5">
-	<display-name>net.jmpd.service</display-name>
+	<display-name>eu.jmpd.service</display-name>
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
@@ -35,7 +35,7 @@
 		</init-param>
 		<init-param>
 			<param-name>org.apache.olingo.odata2.service.factory</param-name>
-			<param-value>net.jmpd.service.registry.ServiceRegistry</param-value>
+			<param-value>eu.jmpd.service.registry.ServiceRegistry</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>

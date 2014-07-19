@@ -1,4 +1,4 @@
-package net.jmpd.service.auth;
+package eu.jmpd.service.auth;
 
 import java.io.IOException;
 

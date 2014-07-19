@@ -1,6 +1,4 @@
-package net.jmpd.service.registry;
-
-import net.jmpd.service.auth.AuthService;
+package eu.jmpd.service.registry;
 
 import org.apache.olingo.odata2.annotation.processor.api.AnnotationServiceFactory;
 import org.apache.olingo.odata2.api.ODataCallback;
@@ -18,6 +16,8 @@ import org.apache.olingo.odata2.api.processor.ODataResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import eu.jmpd.service.auth.AuthService;
+
 public class ServiceRegistry extends ODataServiceFactory {
 
 	/**
@@ -25,7 +25,7 @@ public class ServiceRegistry extends ODataServiceFactory {
 	 * used as singleton instances within the ODataApplication (ODataService)
 	 */
 	private static class AnnotationInstances {
-		final static String MODEL_PACKAGE = "net.jmpd.service.model";
+		final static String MODEL_PACKAGE = "eu.jmpd.service.model";
 		final static ODataService ODATA_SERVICE;
 		final static AuthService AUTH_SERVICE;
 

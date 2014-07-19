@@ -51,7 +51,7 @@ th, td { border: 1px solid; padding: 20px; }
 </style>
 </head>
 <body>
-    <h1>Apache Olingo - OData2 Library</h1>
+    <h1>Debug Page for</h1>
     <hr />
     <h2>jmpd Service</h2>
     <table>
@@ -81,11 +81,11 @@ th, td { border: 1px solid; padding: 20px; }
                     <%
                         if (request.getParameter("genSampleData") != null) { //genSampleData is the name of your button, not id of that button.
                             String requestUrl = request.getRequestURL().toString();
-                            final String old_title="index_old.jsp";
+                            final String old_title="generate_services.jsp";
                             if(requestUrl.endsWith(old_title)) {
                                 requestUrl = requestUrl.substring(0, requestUrl.length()-old_title.length());
                             }
-                            net.jmpd.service.util.SampleDataGenerator.generateData(requestUrl + "registry");
+                            eu.jmpd.service.util.SampleDataGenerator.generateData(requestUrl + "registry");
                             response.sendRedirect(requestUrl);
                         }
                     %>
