@@ -1,14 +1,14 @@
-.\" Manpage for ympc.
+.\" Manpage for jmpd.
 .\" Contact parabelboi@gmail.com to correct errors or typos.
 .TH man 8 "18 Mar 2014" "1.2" "ympc man page"
 .SH NAME
-ympc \- Web Service GUI written in C, utilizing Websockets and Bootstrap/JS
+jmpd \- Web Service GUI written in Java, utilizing Websockets and Bootstrap/JS
 .SH SYNOPSIS
-ympc [OPTION]...
+jmpd [OPTION]...
 .SH DESCRIPTION
-ympc is a lightweight web client that runs without a dedicated webserver or interpreters like PHP, NodeJS or Ruby. It's tuned for minimal resource usage and requires only very litte dependencies.
+jmpd is a lightweight web client that runs within a jetty webserver. It's tuned for minimal resource usage and uses maven for revolving dependencies.
 
-ympc is based in part on the work of the mongoose http server (https://github.com/cesanta/mongoose)
+jmpd is based in part on the work of the mongoose http server (https://github.com/cesanta/mongoose)
 .SH OPTIONS
 .TP
 \fB\-c\fR, \fB\-\-url bootstrap url\fR
@@ -26,7 +26,7 @@ print version and exit
 \fB\-\-help\fR
 print all valid options and exits
 .SH BUGS
-No known bugs.
+Probably.
 .SH AUTHOR
 Andrew Karpow (andy@ndyk.de)
 .PP

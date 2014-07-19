@@ -1,9 +1,7 @@
-ympc
+jmpd
 ====
-[![Build Status](http://ci.ympd.org/github.com/notandy/ympd/status.svg)](https://ci.ympd.org/github.com/notandy/ympd)
 
 Standalone Web Service GUI written in C, utilizing Websockets and Bootstrap/JS
-
 
 http://www.ympd.org
 
@@ -13,6 +11,7 @@ Dependencies
 ------------
  - libmpdclient 2: http://www.musicpd.org/libs/libmpdclient/
  - cmake 2.6: http://cmake.org/
+ - maven 3
 
 Unix Build Instructions
 -----------------------
@@ -26,7 +25,7 @@ Unix Build Instructions
 Run flags
 ---------
 ```
-Usage: ./ympc [OPTION]...
+Usage: ./jmpd [OPTION]...
 
  -c, --url <url>            use alternative url to bootstrap services
  -l, --listen [ip:]<port>   listen on address, defaults to 127.0.0.1:8000
