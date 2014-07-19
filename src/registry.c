@@ -46,8 +46,6 @@ int callback_reg(struct mg_connection *c)
     enum reg_cmd_ids cmd_id = get_cmd_id(c->content);
     size_t n = 0;
 #ifdef WITH_REG_URL_CHANGE
-    unsigned int uint_buf, uint_buf_2;
-    int int_buf;
     char *p_charbuf = NULL;
 #endif
 
@@ -56,20 +54,20 @@ int callback_reg(struct mg_connection *c)
 
     switch(cmd_id)
     {
-    	case REG_API_ADD_URL:
 #ifdef WITH_REG_URL_CHANGE
+    	case REG_API_ADD_URL:
     		/* Commands allowed when disconnected from service registry */
-            int_buf = 0;
-            if(sscanf(c->content, "REG_API_ADD_URL,%d,%m[^\t\n ]", &int_buf, &p_charbuf) &&
-                p_charbuf != NULL && int_buf > 0)
+
+            if(sscanf(c->content, "REG_API_ADD_URL,%m[^\t\n ]", &p_charbuf) &&
+                p_charbuf != NULL)
             {
                 strncpy(reg.url, p_charbuf, sizeof(reg.url));
                 free(p_charbuf);
                 reg.conn_state = REG_RECONNECT;
                 return MG_CLIENT_CONTINUE;
             }
-#endif
             break;
+#endif
         case REG_API_GET_URL:
             n = snprintf(reg.buf, MAX_SIZE, "{\"type\":\"url\", \"data\": "
                 "{\"url\" : \"%s\"}"
@@ -77,6 +75,7 @@ int callback_reg(struct mg_connection *c)
             break;
     }
 
+#ifdef WITH_REG_CONNECT
     if(reg.conn_state == REG_CONNECTED && reg_connection_get_error(reg.conn) != REG_ERROR_SUCCESS)
     {
         n = snprintf(reg.buf, MAX_SIZE, "{\"type\":\"error\", \"data\": \"%s\"}",
@@ -86,6 +85,7 @@ int callback_reg(struct mg_connection *c)
         if (!reg_connection_clear_error(reg.conn))
             reg.conn_state = REG_FAILURE;
     }
+#endif
 
     if(n > 0)
         mg_websocket_write(c, 1, reg.buf, n);
@@ -212,7 +212,6 @@ int reg_put_state(char *buffer)
     reg_status_free(status);
     return len;
 }
-#endif
 
 int reg_connection_get_error(struct reg_connection *conn) {
     return REG_ERROR_SUCCESS;
@@ -226,7 +225,6 @@ bool reg_connection_clear_error(struct reg_connection *connection) {
     return true;
 }
 
-#ifdef WITH_REG_CONNECT
 int reg_connection_new(char *url, unsigned timeout_ms) {
     return NULL;
 }

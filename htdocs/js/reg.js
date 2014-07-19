@@ -82,7 +82,7 @@ function webSocketConnect() {
 				break;
 			case "url":
 				$('#url').val(obj.data.url);
-				//bootstrapServices(obj.data.url);
+				bootstrapServices(obj.data.url);
 				break;
 			case "error":
 				$('.top-right').notify({
@@ -191,7 +191,7 @@ function getUrl() {
 
 function confirmSettings() {
 	socket.send('REG_API_ADD_URL,' + $('#url').val());
-	//bootstrapServices();
+	bootstrapServices();
 	$('#settings').modal('hide');
 }
 

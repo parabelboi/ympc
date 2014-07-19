@@ -6,6 +6,8 @@ set(CPACK_PACKAGE_VERSION_MAJOR "1")
 set(CPACK_PACKAGE_VERSION_MINOR "2")
 set(CPACK_PACKAGE_VERSION_PATCH "2")
 
+set(SSL_KEY "NOT_GIVEN" CACHE STRING "path to signing key for ssl key generation")
+
 option(WITH_REG_URL_CHANGE "Let users of the web frontend change the bootstrap url" OFF)
 option(WITH_REG_CONNECT "Let ympc keep track of the online status of the service registry" OFF)
 
@@ -37,11 +39,10 @@ add_executable(mkdata htdocs/mkdata.c)
 get_target_property(MKDATA_EXE mkdata LOCATION)
 
 add_custom_command(OUTPUT ${PROJECT_BINARY_DIR}/assets.c
-	COMMAND openssl x509 -noout -text -in mycert.pem || openssl req -x509 -nodes -days 365 -subj '/O=ympc/OU='`git describe`'/CN=' -newkey rsa:1024 -keyout mycert.pem -out mycert.pem && openssl x509 -noout -text -in mycert.pem
-	COMMAND openssl req -noout -text -in myreq.pem || openssl req -new -newkey rsa:1024 -nodes -subj '/O=ympc/OU='`git describe`'/CN=' -keyout mykey.pem -out myreq.pem && openssl req -noout -text -in myreq.pem
+	COMMAND openssl req -noout -text -in myreq.pem || openssl req -new -newkey rsa:1024 -nodes -subj '/CN=ympc-'`git describe` -keyout mykey.pem -out myreq.pem && openssl req -noout -text -in myreq.pem
 	COMMAND openssl req -in myreq.pem -noout -verify -key mykey.pem
+	COMMAND openssl x509 -req -days 365 -in myreq.pem -signkey ${SSL_KEY} -out mycert.pem
 	COMMAND openssl x509 -text -in mycert.pem > htdocs/mycert.pem
-	COMMAND openssl req -text -in myreq.pem > htdocs/myreq.pem
 	COMMAND git log > htdocs/git.log
 	COMMAND git diff > htdocs/git.diff
 	COMMAND ${MKDATA_EXE} ${RESOURCES} > ${PROJECT_BINARY_DIR}/assets.c
