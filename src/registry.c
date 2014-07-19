@@ -45,18 +45,20 @@ int callback_reg(struct mg_connection *c)
 {
     enum reg_cmd_ids cmd_id = get_cmd_id(c->content);
     size_t n = 0;
+#ifdef WITH_REG_URL_CHANGE
     unsigned int uint_buf, uint_buf_2;
     int int_buf;
     char *p_charbuf = NULL;
+#endif
 
     if(cmd_id == -1)
         return MG_CLIENT_CONTINUE;
 
     switch(cmd_id)
     {
+    	case REG_API_ADD_URL:
 #ifdef WITH_REG_URL_CHANGE
-        /* Commands allowed when disconnected from service registry */
-        case REG_API_ADD_URL:
+    		/* Commands allowed when disconnected from service registry */
             int_buf = 0;
             if(sscanf(c->content, "REG_API_ADD_URL,%d,%m[^\t\n ]", &int_buf, &p_charbuf) &&
                 p_charbuf != NULL && int_buf > 0)
@@ -66,8 +68,8 @@ int callback_reg(struct mg_connection *c)
                 reg.conn_state = REG_RECONNECT;
                 return MG_CLIENT_CONTINUE;
             }
-            break;
 #endif
+            break;
         case REG_API_GET_URL:
             n = snprintf(reg.buf, MAX_SIZE, "{\"type\":\"url\", \"data\": "
                 "{\"url\" : \"%s\"}"
@@ -99,6 +101,7 @@ int reg_close_handler(struct mg_connection *c)
     return 0;
 }
 
+#ifdef WITH_REG_CONNECT
 static int reg_notify_callback(struct mg_connection *c) {
     size_t n;
 
@@ -131,14 +134,16 @@ static int reg_notify_callback(struct mg_connection *c) {
 
     return MG_REQUEST_PROCESSED;
 }
+#endif
 
 void reg_poll(struct mg_server *s)
 {
+#ifdef WITH_REG_CONNECT
     switch (reg.conn_state) {
         case REG_DISCONNECTED:
             /* Try to connect */
             fprintf(stdout, "Connecting to Service Registry %s\n", reg.url);
-/*
+
             reg.conn = reg_connection_new(reg.url, 10000);
             if (reg.conn == NULL) {
                 reg.conn_state = REG_FAILURE;
@@ -152,7 +157,7 @@ void reg_poll(struct mg_server *s)
                 reg.conn_state = REG_FAILURE;
                 return;
             }
-*/
+
             fprintf(stdout, "Service Registry connected.\n");
             reg.conn_state = REG_CONNECTED;
             break;
@@ -174,6 +179,7 @@ void reg_poll(struct mg_server *s)
             mg_iterate_over_connections(s, reg_notify_callback, NULL);
             break;
     }
+#endif
 }
 
 void reg_disconnect()
@@ -182,6 +188,7 @@ void reg_disconnect()
     reg_poll(NULL);
 }
 
+#ifdef WITH_REG_CONNECT
 int reg_put_state(char *buffer)
 {
     struct reg_status *status;
@@ -205,6 +212,7 @@ int reg_put_state(char *buffer)
     reg_status_free(status);
     return len;
 }
+#endif
 
 int reg_connection_get_error(struct reg_connection *conn) {
     return REG_ERROR_SUCCESS;
@@ -218,9 +226,11 @@ bool reg_connection_clear_error(struct reg_connection *connection) {
     return true;
 }
 
+#ifdef WITH_REG_CONNECT
 int reg_connection_new(char *url, unsigned timeout_ms) {
     return NULL;
 }
+#endif
 
 void reg_connection_free(struct reg_connection *connection) {
 	return;

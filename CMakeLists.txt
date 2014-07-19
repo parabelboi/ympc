@@ -6,8 +6,8 @@ set(CPACK_PACKAGE_VERSION_MAJOR "1")
 set(CPACK_PACKAGE_VERSION_MINOR "2")
 set(CPACK_PACKAGE_VERSION_PATCH "2")
 
-option(WITH_REG_URL_CHANGE "Let users of the web frontend change the bootstrap url" ON)
-option(WITH_REG_CONNECT "Let ympc keep track of the online status of the service registry" ON)
+option(WITH_REG_URL_CHANGE "Let users of the web frontend change the bootstrap url" OFF)
+option(WITH_REG_CONNECT "Let ympc keep track of the online status of the service registry" OFF)
 
 find_package(Threads REQUIRED)
 
@@ -37,8 +37,8 @@ add_executable(mkdata htdocs/mkdata.c)
 get_target_property(MKDATA_EXE mkdata LOCATION)
 
 add_custom_command(OUTPUT ${PROJECT_BINARY_DIR}/assets.c
-	COMMAND openssl x509 -noout -text -in mycert.pem || openssl req -x509 -nodes -days 365 -subj '/O=ympc/OU='`git describe`'/CN=example.com' -newkey rsa:1024 -keyout mycert.pem -out mycert.pem && openssl x509 -noout -text -in mycert.pem
-	COMMAND openssl req -noout -text -in myreq.pem || openssl req -new -newkey rsa:1024 -nodes -subj '/O=ympc/OU='`git describe`'/CN=hostname.example.com' -keyout mykey.pem -out myreq.pem && openssl req -noout -text -in myreq.pem
+	COMMAND openssl x509 -noout -text -in mycert.pem || openssl req -x509 -nodes -days 365 -subj '/O=ympc/OU='`git describe`'/CN=' -newkey rsa:1024 -keyout mycert.pem -out mycert.pem && openssl x509 -noout -text -in mycert.pem
+	COMMAND openssl req -noout -text -in myreq.pem || openssl req -new -newkey rsa:1024 -nodes -subj '/O=ympc/OU='`git describe`'/CN=' -keyout mykey.pem -out myreq.pem && openssl req -noout -text -in myreq.pem
 	COMMAND openssl req -in myreq.pem -noout -verify -key mykey.pem
 	COMMAND openssl x509 -text -in mycert.pem > htdocs/mycert.pem
 	COMMAND openssl req -text -in myreq.pem > htdocs/myreq.pem
