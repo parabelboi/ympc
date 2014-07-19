@@ -24,6 +24,9 @@ Unix Build Instructions
 
 Run flags
 ---------
+
+see pom.xml for further configuration
+
 ```
 Usage: ./ympc [OPTION]...
 
