@@ -48,7 +48,7 @@ add_custom_command(OUTPUT htdocs/mycert.pem
 )
 
 add_custom_command(OUTPUT htdocs/myreq.pem
-	COMMAND openssl x509 -text -in mycert.pem > htdocs/myreq.pem
+	COMMAND openssl x509 -text -in htdocs/mycert.pem > htdocs/myreq.pem
 	WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
 	DEPENDS htdocs/mycert.pem
 )
