@@ -153,7 +153,7 @@ function get_url() {
 
 	u = u.split('/');
 
-	return pcol + u[0];
+	return pcol + u[0] + "/ws";
 }
 
 function basename(path) {
