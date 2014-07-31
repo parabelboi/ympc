@@ -1,11 +1,11 @@
 jmpd
 ====
 
-Standalone Web Service GUI written in C, utilizing Websockets and Bootstrap/JS
+Standalone Web Service GUI written in Java, utilizing Websockets and Bootstrap/JS
 
 http://www.jmpd.eu
 
-![ScreenShot](http://www.jmpd.eu/assets/github/jmpd.png)
+![ScreenShot](http://www.jmpd.eu/)
 
 Dependencies
 ------------
@@ -32,4 +32,5 @@ Copyright
 ---------
 
 2013-2014 <andy@ndyk.de>
+
 2014 <parabelboi@gmail.com>
