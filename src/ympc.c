@@ -26,7 +26,6 @@
 #include <pthread.h>
 
 #include "mongoose.h"
-#include "http_server.h"
 #include "registry.h"
 #include "config.h"
 
@@ -44,12 +43,12 @@ static int server_callback_reg(struct mg_connection *c) {
     {
         c->content[c->content_len] = '\0';
         if(c->content_len)
-            return callback_reg(c);
+            return callback_reg_ws(c);
         else
             return MG_CLIENT_CONTINUE;
     }
     else
-        return callback_http(c);
+    	return callback_reg_http(c);
 }
 
 int main(int argc, char **argv)

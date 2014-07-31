@@ -61,7 +61,8 @@ struct t_reg_client_session {
 };
 
 void reg_poll(struct mg_server *s);
-int callback_reg(struct mg_connection *c);
+int callback_reg_http(struct mg_connection *c);
+int callback_reg_ws(struct mg_connection *c);
 int reg_close_handler(struct mg_connection *c);
 int reg_connection_get_error(struct reg_connection *conn);
 const char * reg_connection_get_error_message(struct reg_connection *conn);

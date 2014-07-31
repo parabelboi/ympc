@@ -24,6 +24,8 @@ int callback_http(struct mg_connection *c)
 {
     const struct embedded_file *req_file;
 
+    mg_send_header(c, "Access-Control-Allow-Origin", reg->url);
+
     if(!strcmp(c->uri, "/"))
         req_file = find_embedded_file("/index.html");
     else
@@ -31,7 +33,7 @@ int callback_http(struct mg_connection *c)
 
     if(req_file)
     {
-        mg_send_header(c, "Content-Type", req_file->mimetype);
+    	mg_send_header(c, "Content-Type", req_file->mimetype);
         mg_send_data(c, req_file->data, req_file->size);
     
         return MG_REQUEST_PROCESSED;

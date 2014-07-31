@@ -25,6 +25,7 @@
 
 #include "registry.h"
 #include "config.h"
+#include "http_server.h"
 #include "json_encode.h"
 
 const char * reg_cmd_strs[] = {
@@ -40,8 +41,34 @@ static inline enum reg_cmd_ids get_cmd_id(char *cmd)
     return -1;
 }
 
+int callback_reg_http(struct mg_connection *c) {
+	const struct embedded_file *req_file;
 
-int callback_reg(struct mg_connection *c)
+    if (reg.url) {
+    	mg_send_header(c, "Access-Control-Allow-Origin", reg.url);
+    	mg_send_header(c, "Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+    	mg_send_header(c, "Access-Control-Allow-Headers", "X-PINGOTHER");
+    	mg_send_header(c, "Access-Control-Max-Age", "1728000");
+    }
+
+    if(!strcmp(c->uri, "/"))
+        req_file = find_embedded_file("/index.html");
+    else
+        req_file = find_embedded_file(c->uri);
+
+    if(req_file)
+    {
+    	mg_send_header(c, "Content-Type", req_file->mimetype);
+        mg_send_data(c, req_file->data, req_file->size);
+
+        return MG_REQUEST_PROCESSED;
+    }
+
+    mg_send_status(c, 404);
+    mg_printf_data(c, "Not Found");
+    return MG_REQUEST_PROCESSED;
+}
+int callback_reg_ws(struct mg_connection *c)
 {
     enum reg_cmd_ids cmd_id = get_cmd_id(c->content);
     size_t n = 0;
