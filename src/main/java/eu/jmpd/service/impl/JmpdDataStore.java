@@ -1,12 +1,22 @@
 package eu.jmpd.service.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-public class JmpdDataStore {
+import org.apache.olingo.odata2.annotation.processor.core.DataSourceProcessor;
+import org.apache.olingo.odata2.annotation.processor.core.datasource.DataSource;
+import org.apache.olingo.odata2.annotation.processor.core.datasource.ValueAccess;
+
+import service.model.Provider;
+import service.model.Service;
+
+public class JmpdDataStore extends DataSourceProcessor {
     
-    public JmpdDataStore() {
+    public JmpdDataStore(final DataSource dataSource, final ValueAccess valueAccess) {
+        super(dataSource, valueAccess);
         cache_service = new WeakHashMap<String, Service>();
         cache_provider = new WeakHashMap<String, Provider>();
         cache_service_per_provider = new WeakHashMap<Provider, Map<String, Service>>();
@@ -92,12 +102,12 @@ public class JmpdDataStore {
         final String serviceid = "serviceid://1";
         final String providerid = "providerid://1";
         
-        final Service service = new Service(serviceid, "jmpd service",
-            "a sample service", providerid, "http://127.0.0.1:8080/",
-            "http://127.0.0.1:8080/assets");
+        final Service service = new Service(serviceid, "jmpd service", providerid, "http://127.0.0.1:8080/");
         
-        final Provider provider = new Provider(providerid, "jmpd provider",
-            "a sample provider", "http://127.0.0.1:8080/");
+        final List<Service> servicelist = new ArrayList<Service>();
+        servicelist.add(service);
+        
+        final Provider provider = new Provider(providerid, "jmpd provider", servicelist);
         
         final Map<String, Service> services = new WeakHashMap<String, Service>();
         services.put(serviceid, service);
