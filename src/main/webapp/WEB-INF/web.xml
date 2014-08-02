@@ -35,7 +35,7 @@
 		</init-param>
 		<init-param>
 			<param-name>org.apache.olingo.odata2.service.factory</param-name>
-			<param-value>eu.jmpd.service.registry.ServiceRegistry</param-value>
+			<param-value>eu.jmpd.service.impl.JmpdServiceRegistry</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
