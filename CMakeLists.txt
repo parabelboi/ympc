@@ -84,7 +84,7 @@ set(SOURCES ${SOURCES}
 add_executable(ympc ${SOURCES})
 target_link_libraries(ympc ${CMAKE_THREAD_LIBS_INIT})
 
-install(TARGETS jmpd DESTINATION bin)
+install(TARGETS ympc DESTINATION bin)
 install(FILES ympc.1 DESTINATION ${CMAKE_INSTALL_PREFIX}/share/man/man1)
 install(DIRECTORY htdocs DESTINATION share/${PROJECT_NAME})
 install(FILES contrib/init.debian DESTINATION /etc/init.d
