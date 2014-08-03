@@ -124,16 +124,19 @@ function getUrl() {
 	$('#url').keypress(onEnter);
 }
 
-function confirmSettings() {
+$('#add-service').on('submit', function(e) {
 	try {
 		console.log("posting sample data");
+		id = $('#Id').value;
+		name = $('#Name').value;
+		url= $('#Url').value;
 		OData.request({
 			requestUri : "/registry/Services",
 			method : "POST",
 			data : {
-				Id : "1",
-				Name : "sample",
-				Url : "http://127.0.0.1:8080/registry",
+				Id : id,
+				Name : name,
+				Url : url,
 			}
 		}, function(err) {
 			console.log("Error occurred");
@@ -143,7 +146,7 @@ function confirmSettings() {
 	}
 
 	$('#settings').modal('hide');
-}
+});
 
 function notificationsSupported() {
 	return "Notification" in window;

@@ -203,25 +203,50 @@
           <p>
           Service Center</p>
           <hr />
-          <form role="form">
-            <label class="control-label" for="BootstrapUrl">bootstrap url</label>
-            <div class="row">
-              <div class="form-group col-md-9">
-                <input type="text" class="form-control" id="url" />
-              </div>
-            </div>
             <table id="services" class="table table-hover">
               <thead>
+          		<form role="form" id="add-service">
                 <tr>
-                  <th>Id</th>
-                  <th>Name</th>
-                  <th>Url</th>                  
+                  <th>
+                  	<label class="control-label" for="Id">Id</label>
+            		<div class="row">
+              			<div class="form-group col-md-3">
+                			<input type="text" class="form-control" id="Id" />
+              			</div>
+            		</div>          
+                  </th>
+                  <th>                  	
+                    <label class="control-label" for="Name">Name</label>
+            		<div class="row">
+              			<div class="form-group col-md-6">
+                			<input type="text" class="form-control" id="Name" />
+              			</div>
+            		</div>          
+				  </th>
+                  <th>                  	
+                    <label class="control-label" for="Url">Url</label>
+            		<div class="row">
+              			<div class="form-group col-md-9">
+                			<input type="text" class="form-control" id="Url" />
+              			</div>
+            		</div>          
+				  </th>
+				  <th>                  	
+                    <label class="control-label" for=""></label>
+            		<div class="row">
+              			<div class="form-group col-md-12">
+                			<button type="submit" class="btn btn-default">Add</button>
+              			</div>
+            		</div>          
+				  </th>       
                 </tr>
+                </form>
               </thead>
               <tbody>
               </tbody>
           </table>
-          </form>
+            
+          
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
