@@ -215,9 +215,7 @@
                 <tr>
                   <th>Id</th>
                   <th>Name</th>
-                  <th>Description</th>
-                  <th>ServiceUrl</th>
-                  <th>ResourceUrl</th>
+                  <th>Url</th>                  
                 </tr>
               </thead>
               <tbody>
@@ -228,6 +226,25 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
           <button type="button" class="btn btn-default" onclick="confirmSettings();">Save</button>
+          <%
+          //genSampleData is the name of your button, not id of that button.
+          if (request.getParameter("genSampleData") != null) {
+          	String requestUrl = request.getRequestURL().toString();
+            final String old_title="index.jsp";
+            if(requestUrl.endsWith(old_title))
+            	requestUrl = requestUrl.substring(0, requestUrl.length()-old_title.length());
+            eu.jmpd.service.impl.SampleGenerator.generateData(requestUrl + "registry");
+            response.sendRedirect(requestUrl);
+          }
+          %>
+          <form method="POST">
+          	<div>
+            	For generation of sample data this button can be used.
+                <br/>
+                But be aware that multiple clicking results in multiple data generation.
+            </div>
+            <input type="submit" id="genSampleData" name="genSampleData" value="Generate sample Data"/>
+          </form>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

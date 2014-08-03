@@ -21,98 +21,57 @@ var socket;
 var reg_socket;
 var last_state;
 var current_app;
+var metadata;
 
 $(document).ready(function() {
-	webSocketConnect();
+	regConnect();
 	if (!notificationsSupported())
 		$('#btnnotify').addClass("disabled");
 	else if ($.cookie("notification") === "true")
 		$('#btnnotify').addClass("active")
 });
 
-function webSocketConnect() {
-	if (typeof MozWebSocket != "undefined") {
-		socket = new MozWebSocket(get_url());
-	} else {
-		socket = new WebSocket(get_url());
-	}
-
+function regConnect() {
 	try {
-		socket.onopen = function() {
-			console.log("connected to jmpd");
+		OData.read("/registry/$metadata", 
+		function(data) {
+			console.log("getting results");
+			metadata = data;
+			OData.defaultMetadata.push(metadata);
 			$('.top-right').notify({
 				message : {
-					text : "Connected to jmpd daemon"
+					text : "loading namespace: " + metadata.dataServices.schema[0].namespace
 				},
 				fadeOut : {
 					enabled : true,
 					delay : 500
 				}
-			}).show();
-			console.log("requesting service url");
-			socket.send('REG_API_GET_URL');			
-		}
+			});
+		}, function(err) {
+			alert(JSON.stringify(err));
+		}, OData.metadataHandler);
 
-		socket.onmessage = function got_packet(msg) {
-
-			if (msg.data === last_state || msg.data.length == 0)
-				return;
-
-			var obj = JSON.parse(msg.data);
-
-			switch (obj.type) {
-			case "state":
-				if (JSON.stringify(obj) === JSON.stringify(last_state))
-					break;
-
-				last_state = obj;
-				break;
-			case "disconnected":
-				if ($('.top-right').has('div').length == 0)
-					$('.top-right').notify({
-						message : {
-							text : "jmpd lost connection to service registry "
-						},
-						type : "danger",
-						fadeOut : {
-							enabled : true,
-							delay : 1000
-						},
-					}).show();
-				break;
-			case "url":
-				$('#url').val(obj.data.url);
-				bootstrapServices(obj.data.url);
-				break;
-			case "error":
-				$('.top-right').notify({
-					message : {
-						text : obj.data
-					},
-					type : "danger",
-				}).show();
-			default:
-				break;
-			}
-		}
-
-		socket.onclose = function() {
-			console.log("disconnected from jmpd");
+		OData.read({
+			requestUri : "/registry/Services"
+		}, function(data) {
+			var html = "";
+			$.each(data.results, function() {
+				html += "<tr><td>" + this.Id + "</td><td>" + this.Name + "</td><td>"
+						+ this.Url + "</td></tr>";
+			});
+			$(html).appendTo($("#services > tbody"));
+		}, function(err) {
 			$('.top-right').notify({
 				message : {
-					text : "Connection to jmpd lost, retrying in 3 seconds "
+					text : err.message
 				},
 				type : "danger",
-				onClose : function() {
-					webSocketConnect();
-				}
 			}).show();
-		}
-
+			console.log("Error occurred: " + err.message);
+		});
 	} catch (exception) {
 		alert('<p>Error' + exception);
 	}
-
 }
 
 function bootstrapServices(url) {
@@ -123,37 +82,13 @@ function bootstrapServices(url) {
 			var html = "";
 			$.each(data.results, function(e) {
 				html += "<tr><td>" + e.Id + "</td><td>" + e.Name + "</td><td>"
-						+ e.Description + "</td><td>" + e.ServiceUrl
-						+ "</td><td>" + e.ResourceUrl + "</td></tr>";
+						+ e.Url + "</td></tr>";
 			});
 			$(html).appendTo($("#services > tbody"));
 		});
 	} catch (exception) {
 		alert('<p>Error' + exception);
 	}
-}
-
-function get_url() {
-	var pcol;
-	var u = document.URL;
-
-	/*
-	 * /* We open the websocket encrypted if this page came on an /* https://
-	 * url itself, otherwise unencrypted /
-	 */
-
-	if (u.substring(0, 5) == "https") {
-		pcol = "wss://";
-		u = u.substr(8);
-	} else {
-		pcol = "ws://";
-		if (u.substring(0, 4) == "http")
-			u = u.substr(7);
-	}
-
-	u = u.split('/');
-
-	return pcol + u[0];
 }
 
 function basename(path) {
@@ -190,8 +125,23 @@ function getUrl() {
 }
 
 function confirmSettings() {
-	socket.send('REG_API_ADD_URL,' + $('#url').val());
-	bootstrapServices();
+	try {
+		console.log("posting sample data");
+		OData.request({
+			requestUri : "/registry/Services",
+			method : "POST",
+			data : {
+				Id : "1",
+				Name : "sample",
+				Url : "http://127.0.0.1:8080/registry",
+			}
+		}, function(err) {
+			console.log("Error occurred");
+		});
+	} catch (exception) {
+		alert('<p>Error' + exception);
+	}
+
 	$('#settings').modal('hide');
 }
 
