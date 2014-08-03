@@ -44,7 +44,7 @@ public class SampleGenerator {
     private static final boolean PRINT_RAW_CONTENT        = true;
     
     public static void main(String[] args) {
-        String serviceUrl = "http://127.0.0.1:8080/registry";
+        String serviceUrl = "/registry";
         if (args.length == 1) {
             serviceUrl = args[0];
         }
