@@ -1,43 +1,47 @@
 package service.model;
 
-import java.util.HashMap;
-
 import org.apache.olingo.odata2.api.annotation.edm.EdmEntitySet;
 import org.apache.olingo.odata2.api.annotation.edm.EdmEntityType;
 import org.apache.olingo.odata2.api.annotation.edm.EdmKey;
-import org.apache.olingo.odata2.api.annotation.edm.EdmNavigationProperty;
 import org.apache.olingo.odata2.api.annotation.edm.EdmProperty;
+import org.apache.olingo.odata2.api.annotation.edm.EdmType;
 
-@EdmEntityType
-@EdmEntitySet
-public class Service extends Entity {
+@EdmEntityType(name = "Service")
+@EdmEntitySet(name = "Services")
+public class Service {
     @EdmKey
-    @EdmProperty
-    private String              id;
-    @EdmProperty
-    private String              name;
-    @EdmNavigationProperty
-    private Provider            provider;
+    @EdmProperty(name = "Id", type = EdmType.STRING)
+    private String Id;
+    @EdmProperty(name = "Name")
+    private String Name;
+    @EdmProperty(name = "Url")
+    private String Url;
     
-    private final static String Id         = "Id";
-    private final static String Name       = "Name";
-    private final static String Provider   = "Provider";
-    private final static String ServiceUrl = "ServiceUrl";
-    
-    /** optional getter and setter */
-    
-    public Service(
-        final String id,
-        final String name,
-        final String provider,
-        final String serviceUrl)
-    {
-        super(new HashMap<String, Object>());
-        this.id = id;
-        put(Id, id);
-        put(Name, name);
-        put(Provider, provider);
-        put(ServiceUrl, name);
+    public Service() {
+        super();
     }
     
+    public String getId() {
+        return Id;
+    }
+    
+    public void setId(final String id) {
+        Id = id;
+    }
+    
+    public String getName() {
+        return Name;
+    }
+    
+    public void setName(String name) {
+        Name = name;
+    }
+    
+    public String getUrl() {
+        return Url;
+    }
+    
+    public void setUrl(String url) {
+        Url = url;
+    }
 }
