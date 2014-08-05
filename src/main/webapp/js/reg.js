@@ -24,23 +24,22 @@ var current_app;
 var metadata;
 
 $(document).ready(function() {
-	regConnect();
+	getMetaData();
+	readServices();
 	if (!notificationsSupported())
 		$('#btnnotify').addClass("disabled");
 	else if ($.cookie("notification") === "true")
 		$('#btnnotify').addClass("active")
 });
 
-function regConnect() {
+function getMetaData() {
 	try {
-		OData.read("/registry/$metadata", 
-		function(data) {
-			console.log("getting results");
+		OData.read("/registry/$metadata", function(data) {
 			metadata = data;
 			OData.defaultMetadata.push(metadata);
 			$('.top-right').notify({
 				message : {
-					text : "loading namespace: " + metadata.dataServices.schema[0].namespace
+					text : "connected to ympd"
 				},
 				fadeOut : {
 					enabled : true,
@@ -50,16 +49,21 @@ function regConnect() {
 		}, function(err) {
 			alert(JSON.stringify(err));
 		}, OData.metadataHandler);
+	} catch (exception) {
+		alert('<p>Error' + exception);
+	}
+}
 
+function readServices() {
+	try {
 		OData.read({
 			requestUri : "/registry/Services"
 		}, function(data) {
-			var html = "";
 			$.each(data.results, function() {
-				html += "<tr><td>" + this.Id + "</td><td>" + this.Name + "</td><td>"
-						+ this.Url + "</td></tr>";
+				$("<tr><td>" + this.Id + "</td><td>" + this.Name
+								+ "</td><td>" + this.Url + "</td></tr>")
+						.appendTo($("#services > tbody"));
 			});
-			$(html).appendTo($("#services > tbody"));
 		}, function(err) {
 			$('.top-right').notify({
 				message : {
@@ -67,32 +71,10 @@ function regConnect() {
 				},
 				type : "danger",
 			}).show();
-			console.log("Error occurred: " + err.message);
 		});
 	} catch (exception) {
 		alert('<p>Error' + exception);
 	}
-}
-
-function bootstrapServices(url) {
-	console.log("connecting to service url: " + url);
-	try {
-		OData.read(url, function(data) {
-			console.log("receiving results");
-			var html = "";
-			$.each(data.results, function(e) {
-				html += "<tr><td>" + e.Id + "</td><td>" + e.Name + "</td><td>"
-						+ e.Url + "</td></tr>";
-			});
-			$(html).appendTo($("#services > tbody"));
-		});
-	} catch (exception) {
-		alert('<p>Error' + exception);
-	}
-}
-
-function basename(path) {
-	return path.split('/').reverse()[0];
 }
 
 $('#btnnotify').on('click', function(e) {
@@ -114,39 +96,29 @@ $('#btnnotify').on('click', function(e) {
 	}
 });
 
-function getUrl() {
-	function onEnter(event) {
-		if (event.which == 13) {
-			confirmSettings();
-		}
-	}
-
-	$('#url').keypress(onEnter);
-}
-
-$('#add-service').on('submit', function(e) {
-	try {
-		console.log("posting sample data");
-		id = $('#Id').value;
-		name = $('#Name').value;
-		url= $('#Url').value;
-		OData.request({
-			requestUri : "/registry/Services",
-			method : "POST",
-			data : {
-				Id : id,
-				Name : name,
-				Url : url,
+$('#add-service').on(
+		'submit',
+		function(e) {
+			try {
+				fields = $(this).serializeArray();
+				console.log("posting sample data");
+				OData.request({
+					requestUri : "/registry/Services",
+					method : "POST",
+					data : fields,
+				}, function(insertedItem) {
+					$(
+							"<tr><td>" + insertedItem.Id + "</td><td>"
+									+ insertedItem.Name + "</td><td>"
+									+ insertedItem.Url + "</td></tr>")
+							.appendTo($("#services > tbody"));
+				}, function(err) {
+					console.log("Error occurred");
+				});
+			} catch (exception) {
+				alert('<p>Error' + exception);
 			}
-		}, function(err) {
-			console.log("Error occurred");
 		});
-	} catch (exception) {
-		alert('<p>Error' + exception);
-	}
-
-	$('#settings').modal('hide');
-});
 
 function notificationsSupported() {
 	return "Notification" in window;

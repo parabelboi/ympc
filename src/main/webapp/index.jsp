@@ -40,7 +40,7 @@
       <div class="collapse navbar-collapse">
 
         <ul id="nav_links" class="nav navbar-nav">
-          <li><a href="#" data-toggle="modal" data-target="#settings" onclick="getUrl();">Settings</a></li>
+          <li><a href="#" data-toggle="modal" data-target="#settings">Settings</a></li>
         </ul>
 <!-- 
         <form id="search" class="navbar-form navbar-right" role="search">
