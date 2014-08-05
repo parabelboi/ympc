@@ -82,7 +82,7 @@ function webSocketConnect() {
 				break;
 			case "url":
 				$('#url').val(obj.data.url);
-				bootstrapServices(obj.data.url);
+				//bootstrapServices(obj.data.url);
 				break;
 			case "error":
 				$('.top-right').notify({
@@ -153,7 +153,7 @@ function get_url() {
 
 	u = u.split('/');
 
-	return pcol + u[0] + "/ws";
+	return pcol + u[0] + "/ws/";
 }
 
 function basename(path) {

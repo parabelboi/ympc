@@ -39,7 +39,7 @@
       <div class="collapse navbar-collapse">
 
         <ul id="nav_links" class="nav navbar-nav">
-          <li><a href="#" data-toggle="modal" data-target="#settings" onclick="getUrl();">Settings</a></li>
+          <li><a href="#" data-toggle="modal" data-target="#settings" onclick="">Settings</a></li>
         </ul>
 <!-- 
         <form id="search" class="navbar-form navbar-right" role="search">
@@ -202,6 +202,7 @@
           <p>
           Service Center</p>
           <hr />
+<!--
           <form role="form">
             <label class="control-label" for="BootstrapUrl">bootstrap url</label>
             <div class="row">
@@ -222,6 +223,48 @@
               <tbody>
               </tbody>
           </table>
+-->
+          <table id="services" class="table table-hover">
+            <thead>
+              <form role="form" id="service">
+                <tr>
+                  <th>
+                    <label class="control-label" for="Id">Id</label>
+                    <div class="row">
+                      <div class="form-group col-md-3">
+                        <input type="text" class="form-control" id="Id" />
+                      </div>
+                    </div>
+                  </th>
+                  <th>
+                    <label class="control-label" for="Name">Name</label>
+                    <div class="row">
+                      <div class="form-group col-md-6">
+                        <input type="text" class="form-control" id="Name" />
+                      </div>
+                    </div>
+                  </th>
+                  <th>
+                    <label class="control-label" for="Url">Url</label>
+                    <div class="row">
+                      <div class="form-group col-md-9">
+                        <input type="text" class="form-control" id="Url" />
+                      </div>
+                    </div>
+                  </th>
+                  <th>
+                    <label class="control-label" for=""></label>
+                    <div class="row">
+                      <div class="form-group col-md-12">
+                        <button type="button" class="btn btn-default">Add</button>
+                      </div>
+                    </div>
+                  </th>
+                </tr>
+              </form>
+            </thead>
+            <tbody>
+            </tbody>
           </form>
         </div>
         <div class="modal-footer">
