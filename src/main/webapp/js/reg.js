@@ -60,9 +60,12 @@ function readServices() {
 			requestUri : "/registry/Services"
 		}, function(data) {
 			$.each(data.results, function() {
-				$("<tr><td>" + this.Id + "</td><td>" + this.Name
-								+ "</td><td>" + this.Url + "</td></tr>")
-						.appendTo($("#services > tbody"));
+				$("<tr serviceid=\""+this.Id+"\">"
+						+ "<td>" + this.Id + "</td>"
+						+ "<td>" + this.Name + "</td>"
+						+ "<td>" + this.Url + "</td>"
+						+ "<td><button class=\"btn btn-default\" onclick=\"removeService(\'"+this.Id+"\');\">-</button></td>"
+					+ "</tr>").appendTo($("#services > tbody"));
 			});
 		}, function(err) {
 			$('.top-right').notify({
@@ -76,6 +79,24 @@ function readServices() {
 		alert('<p>Error' + exception);
 	}
 }
+
+function removeService(serviceId) {
+	try {
+		console.log("removing service");
+		OData.request({
+			requestUri : "/registry/Services(\'"+serviceId+"\')",
+			method : "DELETE",
+		}, function(deletedItem) {
+			console.log("removed service");
+			$("#services > tbody > tr[serviceid="+serviceId+"]").remove();
+		}, function(err) {
+			console.log("Error occurred");
+		});
+	} catch (exception) {
+		alert('<p>Error' + exception);
+	}
+}
+
 
 $('#btnnotify').on('click', function(e) {
 	if ($.cookie("notification") === "true") {
@@ -96,29 +117,31 @@ $('#btnnotify').on('click', function(e) {
 	}
 });
 
-$('#add-service').on(
-		'submit',
-		function(e) {
-			try {
-				fields = $(this).serializeArray();
-				console.log("posting sample data");
-				OData.request({
-					requestUri : "/registry/Services",
-					method : "POST",
-					data : fields,
-				}, function(insertedItem) {
-					$(
-							"<tr><td>" + insertedItem.Id + "</td><td>"
-									+ insertedItem.Name + "</td><td>"
-									+ insertedItem.Url + "</td></tr>")
-							.appendTo($("#services > tbody"));
-				}, function(err) {
-					console.log("Error occurred");
-				});
-			} catch (exception) {
-				alert('<p>Error' + exception);
+$("#addbtn").on('click', function(e) {
+	try {
+		console.log("posting sample data");
+		OData.request({
+			requestUri : "/registry/Services",
+			method : "POST",
+			data : {
+				Id : $("#Id").val(),
+				Name : $("#Name").val(),
+				Url : $("#Url").val(),
 			}
+		}, function(insertedItem) {
+			$( "<tr serviceid="+insertedItem.Id+">"
+				+ "<td>" + insertedItem.Id + "</td>"
+				+ "<td>" + insertedItem.Name + "</td>"
+				+ "<td>" + insertedItem.Url + "</td>"
+				+ "<td><button class=\"btn btn-default\" onclick=\"removeService(\'"+insertedItem.Id+"\');\">-</button></td>"
+			+ "</tr>").appendTo($("#services > tbody"));			
+		}, function(err) {
+			console.log("Error occurred");
 		});
+	} catch (exception) {
+		alert('<p>Error' + exception);
+	}
+});
 
 function notificationsSupported() {
 	return "Notification" in window;
