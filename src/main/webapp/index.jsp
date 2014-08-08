@@ -200,76 +200,31 @@
           <h2 class="modal-title" id="settingsLabel"><span class="glyphicon glyphicon-wrench"></span> Settings</h2>
         </div>
         <div class="modal-body">          
-          <p>
-          Service Center</p>
-          <hr />
-            <table id="services" class="table table-hover">
-              <thead>
-          		<form role="form" id="add-service">
+          <table id="services" class="table table-hover">
+            <thead>
                 <tr>
                   <th>
                   	<label class="control-label" for="Id">Id</label>
-            		<div class="row">
-              			<div class="form-group col-md-3">
-                			<input type="text" class="form-control" id="Id" />
-              			</div>
-            		</div>          
-                  </th>
+            		<input type="text" class="form-control" id="Id" />
+              	  </th>
                   <th>                  	
                     <label class="control-label" for="Name">Name</label>
-            		<div class="row">
-              			<div class="form-group col-md-6">
-                			<input type="text" class="form-control" id="Name" />
-              			</div>
-            		</div>          
-				  </th>
+            		<input type="text" class="form-control" id="Name" />
+              	  </th>
                   <th>                  	
                     <label class="control-label" for="Url">Url</label>
-            		<div class="row">
-              			<div class="form-group col-md-9">
-                			<input type="text" class="form-control" id="Url" />
-              			</div>
-            		</div>          
-				  </th>
-				  <th>                  	
-                    <label class="control-label" for=""></label>
-            		<div class="row">
-              			<div class="form-group col-md-12">
-                			<button type="submit" class="btn btn-default">Add</button>
-              			</div>
-            		</div>          
-				  </th>       
-                </tr>
-                </form>
-              </thead>
-              <tbody>
-              </tbody>
+            		<input type="text" class="form-control" id="Url" />
+              	  </th>
+              	  <th>                  	
+                	<button type="button" class="btn btn-default" id="addbtn">+</button>
+              	  </th>       
+                </tr>              
+            </thead>
+            <tbody>
+            </tbody>
           </table>
-            
-          
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-default" onclick="confirmSettings();">Save</button>
-          <%
-          //genSampleData is the name of your button, not id of that button.
-          if (request.getParameter("genSampleData") != null) {
-          	String requestUrl = request.getRequestURL().toString();
-            final String old_title="index.jsp";
-            if(requestUrl.endsWith(old_title))
-            	requestUrl = requestUrl.substring(0, requestUrl.length()-old_title.length());
-            eu.jmpd.service.impl.SampleGenerator.generateData(requestUrl + "registry");
-            response.sendRedirect(requestUrl);
-          }
-          %>
-          <form method="POST">
-          	<div>
-            	For generation of sample data this button can be used.
-                <br/>
-                But be aware that multiple clicking results in multiple data generation.
-            </div>
-            <input type="submit" id="genSampleData" name="genSampleData" value="Generate sample Data"/>
-          </form>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
