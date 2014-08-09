@@ -7,8 +7,8 @@ It wants to be a sample implementation, a playing ground. Goals are easy deploym
 
 http://www.ympc.eu
 
-![ScreenShot](http://error.ympd.eu/)
-
+![ScreenShot](http://error.ympc.eu/)
+=======
 Dependencies
 ------------
  - cmake 2.6: http://cmake.org/
