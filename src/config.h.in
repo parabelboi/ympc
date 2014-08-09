@@ -1,6 +1,7 @@
-/* ympd
+/* ympc
    (c) 2013-2014 Andrew Karpow <andy@ndyk.de>
-   This project's homepage is: http://www.ympd.org
+   (c) 2014 Christian Krafft <parabelboi@gmail.com>
+   This project's homepage is: http://www.ympc.eu
    
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -24,6 +25,8 @@
 #define YMPC_VERSION_PATCH ${CPACK_PACKAGE_VERSION_PATCH}
 #define DATADIR "${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME}"
 #define LOCAL_RESOURCE_PATH DATADIR"/htdocs"
-#cmakedefine WITH_MPD_HOST_CHANGE
+#cmakedefine WITH_REG_URL_CHANGE
+#cmakedefine WITH_REG_CONNECT
+#cmakedefine WITH_GIT_INFO
 #endif
 
