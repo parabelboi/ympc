@@ -57,6 +57,7 @@ add_custom_command(OUTPUT htdocs/git.log
 	COMMAND git log  > htdocs/git.log
 	WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
 )
+
 add_custom_command(OUTPUT htdocs/git.diff
     COMMAND git diff > htdocs/git.diff
 	WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
@@ -74,10 +75,10 @@ set(SOURCES ${SOURCES}
     src/mongoose.c
     src/json_encode.c
     assets.c
-	htdocs/mycert.pem
-	htdocs/myreq.pem
-	htdocs/git.log
-	htdocs/git.diff
+    htdocs/mycert.pem
+    htdocs/myreq.pem
+    htdocs/git.log
+    htdocs/git.diff
 )
 
 add_executable(ympc ${SOURCES})
