@@ -1,0 +1,14 @@
+[Unit]
+Description=ympc server daemon
+Requires=network.target local-fs.target
+
+[Service]
+Environment=REGISTRY_URL="http://localhost:8080/registry"
+Environment=LISTEN=localhost:8080
+Environment=USER=nobody
+EnvironmentFile=-/etc/conf.d/ympc
+ExecStart=/usr/bin/ympc -c $REGISTRY_URL -l $LISTEN -u $USER  
+Type=simple
+
+[Install]
+WantedBy=multi-user.target
