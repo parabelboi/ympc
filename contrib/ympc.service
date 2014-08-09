@@ -7,7 +7,7 @@ Environment=REGISTRY_URL="http://localhost:8080/registry"
 Environment=LISTEN=localhost:8080
 Environment=USER=nobody
 EnvironmentFile=-/etc/conf.d/ympc
-ExecStart=/usr/bin/ympc -c $REGISTRY_URL -l $LISTEN -u $USER  
+ExecStart=/usr/bin/ympc -c $REGISTRY_URL -l $LISTEN -u $USER
 Type=simple
 
 [Install]
