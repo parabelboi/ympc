@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<edmx:Edmx Version="1.0"
+	xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
+	<edmx:DataServices m:DataServiceVersion="1.0"
+		xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
+		<Schema Namespace="service.model"
+			xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+			<EntityType Name="Service" BaseType="service.model.Base">
+				<Property Name="Url" Type="Edm.String" />
+				<NavigationProperty Name="Provider"
+					Relationship="service.model.ProviderOfService" FromRole="r_Service"
+					ToRole="r_Provider" />
+			</EntityType>
+			<EntityType Name="Provider" BaseType="service.model.Base">
+				<NavigationProperty Name="Services"
+					Relationship="service.model.ServicesOfProvider" FromRole="r_Provider"
+					ToRole="r_Service" />
+			</EntityType>
+			<EntityType Name="Base">
+				<Key>
+					<PropertyRef Name="Id" />
+				</Key>
+				<Property Name="Id" Type="Edm.String" />
+				<Property Name="Name" Type="Edm.String" />
+			</EntityType>
+			<Association Name="ServicesOfProvider">
+				<End Type="service.model.Provider" Multiplicity="1" Role="r_Provider" />
+				<End Type="service.model.Service" Multiplicity="*" Role="r_Service" />
+			</Association>
+			<Association Name="ProviderOfService">
+				<End Type="service.model.Service" Multiplicity="1" Role="r_Service" />
+				<End Type="service.model.Provider" Multiplicity="1" Role="r_Provider" />
+			</Association>
+			<EntityContainer Name="DefaultContainer"
+				m:IsDefaultEntityContainer="true">
+				<EntitySet Name="Services" EntityType="service.model.Service" />
+				<EntitySet Name="Providers" EntityType="service.model.Provider" />
+				<AssociationSet Name="ServicesOfProvider"
+					Association="service.model.ServicesOfProvider">
+					<End EntitySet="Providers" Role="r_Provider" />
+					<End EntitySet="Services" Role="r_Service" />
+				</AssociationSet>
+				<AssociationSet Name="ProviderOfService"
+					Association="service.model.ProviderOfService">
+					<End EntitySet="Services" Role="r_Service" />
+					<End EntitySet="Providers" Role="r_Provider" />
+				</AssociationSet>
+			</EntityContainer>
+		</Schema>
+	</edmx:DataServices>
+</edmx:Edmx>
