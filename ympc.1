@@ -1,8 +1,8 @@
 .\" Manpage for ympc.
-.\" Contact parabelboi@ympc.eu to correct errors or typos.
-.TH man 8 "18 Mar 2014" "1.2" "ympd man page"
+.\" Contact parabelboi@gmail.com to correct errors or typos.
+.TH man 8 "18 Mar 2014" "1.2" "ympc man page"
 .SH NAME
-ympc \- Standalone Web GUI written in C, using Bootstrap/JS
+ympc \- Web Service GUI written in C, utilizing Bootstrap/JS
 .SH SYNOPSIS
 ympc [OPTION]...
 .SH DESCRIPTION
@@ -11,14 +11,11 @@ ympc is a lightweight web client that runs without a dedicated webserver or inte
 ympc is based in part on the work of the mongoose http server (https://github.com/cesanta/mongoose)
 .SH OPTIONS
 .TP
-\fB\-h\fR, \fB\-\-host HOST\fR
-connect to mpd at host, defaults to localhost
+\fB\-c\fR, \fB\-\-url bootstrap url\fR
+use alternative url to bootstrap services
 .TP
-\fB\-p\fR, \fB\-\-port PORT\fR
-connect to mpd at port, defaults to 6600
-.TP
-\fB\-w\fR, \fB\-\-webport PORT\fR
-specifies the port for the webserver to listen to, defaults to 8080
+\fB\-l\fR, \fB\-\-listen \[IP\]\:PORT\fR
+listen on address, defaults to 127.0.0.1:8000
 .TP
 \fB\-u\fR, \fB\-\-user username\fR
 drop privileges to the provided username after socket binding
@@ -32,7 +29,5 @@ print all valid options and exits
 No known bugs.
 .SH AUTHOR
 Andrew Karpow (andy@ndyk.de)
-.TP
+.PP
 Christian Krafft (parabelboi@gmail.com)
-
-http://www.ympc.eu
