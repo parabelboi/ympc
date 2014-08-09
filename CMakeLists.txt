@@ -29,7 +29,6 @@ file(GLOB RESOURCES
 	htdocs/css/*.min.css
 	htdocs/css/*.css
 	htdocs/fonts/*
-	htdocs/mpd/*
 	htdocs/index.html
 	htdocs/mycert.pem
 	htdocs/myreq.pem
