@@ -38,7 +38,8 @@
       </div>
       <div class="collapse navbar-collapse">
         <ul id="nav_links" class="nav navbar-nav">
-          <li><a href="#" data-toggle="modal" data-target="#settings">Settings</a></li>
+          <li><a href="#" data-toggle="modal" data-target="#servicesettings">Services</a></li>
+          <li><a href="#" data-toggle="modal" data-target="#providersettings">Providers</a></li>
         </ul>
         <div class="btn-toolbar navbar-btn navbar-right" role="toolbar"></div>
       </div><!--/.nav-collapse -->
@@ -71,12 +72,12 @@
   </div><!-- /.container -->
 
   <!-- Modal -->
-  <div class="modal fade" id="settings" tabindex="-1" role="dialog" aria-labelledby="settingsLabel" aria-hidden="true">
+  <div class="modal fade" id="servicesettings" tabindex="-1" role="dialog" aria-labelledby="settingsLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h2 class="modal-title" id="settingsLabel"><span class="glyphicon glyphicon-wrench"></span> Settings</h2>
+          <h2 class="modal-title" id="settingsLabel"><span class="glyphicon glyphicon-wrench"></span> Services</h2>
         </div>
         <div class="modal-body">          
           <table id="services" class="table table-hover">
@@ -84,18 +85,18 @@
               <tr>
                 <th>
                   <label class="control-label" for="Id">Id</label>
-                  <input type="text" class="form-control" id="Id" />
+                  <input type="text" class="form-control" id="serviceId" />
                 </th>
                 <th>
                   <label class="control-label" for="Name">Name</label>
-                  <input type="text" class="form-control" id="Name" />
+                  <input type="text" class="form-control" id="serviceName" />
                 </th>
                 <th>
                   <label class="control-label" for="Url">Url</label>
-                  <input type="text" class="form-control" id="Url" />
+                  <input type="text" class="form-control" id="serviceUrl" />
                 </th>
                 <th>
-                  <button type="button" class="btn btn-default" id="addbtn">+</button>
+                  <button type="button" class="btn btn-default" id="addservicebtn">+</button>
                 </th>
               </tr>
             </thead>
@@ -109,6 +110,40 @@
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
 
+  <!-- Modal -->
+  <div class="modal fade" id="providersettings" tabindex="-1" role="dialog" aria-labelledby="settingsLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h2 class="modal-title" id="settingsLabel"><span class="glyphicon glyphicon-wrench"></span> Providers</h2>
+        </div>
+        <div class="modal-body">          
+          <table id="providers" class="table table-hover">
+            <thead>
+              <tr>
+                <th>
+                  <label class="control-label" for="Id">Id</label>
+                  <input type="text" class="form-control" id="providerId" />
+                </th>
+                <th>
+                  <label class="control-label" for="Name">Name</label>
+                  <input type="text" class="form-control" id="providerName" />
+                </th>
+                <th>
+                  <button type="button" class="btn btn-default" id="addproviderbtn">+</button>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
 
   <!-- Bootstrap core JavaScript
   ================================================== -->

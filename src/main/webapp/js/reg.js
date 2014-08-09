@@ -26,6 +26,7 @@ var metadata;
 $(document).ready(function() {
 	getMetaData();
 	readServices();
+	readProviders();
 	if (!notificationsSupported())
 		$('#btnnotify').addClass("disabled");
 	else if ($.cookie("notification") === "true")
@@ -60,11 +61,11 @@ function readServices() {
 			requestUri : "/registry/Services"
 		}, function(data) {
 			$.each(data.results, function() {
-				$("<tr serviceid=\""+this.Id+"\">"
+				$("<tr id=\""+this.Id+"\">"
 						+ "<td>" + this.Id + "</td>"
 						+ "<td>" + this.Name + "</td>"
 						+ "<td>" + this.Url + "</td>"
-						+ "<td><button class=\"btn btn-default\" onclick=\"removeService(\'"+this.Id+"\');\">-</button></td>"
+						+ "<td><button class=\"btn btn-default\" onclick=\"removeEntry(\'Services\',\'"+this.Id+"\',\'#services\');\">-</button></td>"
 					+ "</tr>").appendTo($("#services > tbody"));
 			});
 		}, function(err) {
@@ -80,15 +81,38 @@ function readServices() {
 	}
 }
 
-function removeService(serviceId) {
+function readProviders() {
 	try {
-		console.log("removing service");
+		OData.read({
+			requestUri : "/registry/Providers"
+		}, function(data) {
+			$.each(data.results, function() {
+				$("<tr id=\""+this.Id+"\">"
+						+ "<td>" + this.Id + "</td>"
+						+ "<td>" + this.Name + "</td>"
+						+ "<td><button class=\"btn btn-default\" onclick=\"removeEntry(\'Providers\',\'"+this.Id+"\',\'#providers\');\">-</button></td>"
+					+ "</tr>").appendTo($("#providers > tbody"));
+			});
+		}, function(err) {
+			$('.top-right').notify({
+				message : {
+					text : err.message
+				},
+				type : "danger",
+			}).show();
+		});
+	} catch (exception) {
+		alert('<p>Error' + exception);
+	}
+}
+
+function removeEntry(setName, id, tableName) {
+	try {
 		OData.request({
-			requestUri : "/registry/Services(\'"+serviceId+"\')",
+			requestUri : "/registry/"+setName+"(\'"+id+"\')",
 			method : "DELETE",
 		}, function(deletedItem) {
-			console.log("removed service");
-			$("#services > tbody > tr[serviceid="+serviceId+"]").remove();
+			$(tableName + "> tbody > tr[id="+id+"]").remove();
 		}, function(err) {
 			console.log("Error occurred");
 		});
@@ -96,6 +120,55 @@ function removeService(serviceId) {
 		alert('<p>Error' + exception);
 	}
 }
+
+$("#addservicebtn").on('click', function(e) {
+	try {
+		OData.request({
+			requestUri : "/registry/Services",
+			method : "POST",
+			data : {
+				Id : $("#serviceId").val(),
+				Name : $("#serviceName").val(),
+				Url : $("#serviceUrl").val(),
+			}
+		}, function(insertedItem) {
+			$( "<tr id="+insertedItem.Id+">"
+				+ "<td>" + insertedItem.Id + "</td>"
+				+ "<td>" + insertedItem.Name + "</td>"
+				+ "<td>" + insertedItem.Url + "</td>"
+				+ "<td><button class=\"btn btn-default\" onclick=\"removeEntry(\'Services\',\'"+insertedItem.Id+"\',\'#services\');\">-</button></td>"
+			+ "</tr>").appendTo($("#services > tbody"));			
+		}, function(err) {
+			console.log("Error occurred");
+		});
+	} catch (exception) {
+		alert('<p>Error' + exception);
+	}
+});
+
+$("#addproviderbtn").on('click', function(e) {
+	try {
+		OData.request({
+			requestUri : "/registry/Providers",
+			method : "POST",
+			data : {
+				Id : $("#providerId").val(),
+				Name : $("#providerName").val(),
+			}
+		}, function(insertedItem) {
+			$( "<tr id="+insertedItem.Id+">"
+				+ "<td>" + insertedItem.Id + "</td>"
+				+ "<td>" + insertedItem.Name + "</td>"
+				+ "<td><button class=\"btn btn-default\" onclick=\"removeEntry(\'Providers\',\'"+insertedItem.Id+"\',\'#providers\');\">-</button></td>"
+			+ "</tr>").appendTo($("#providers > tbody"));			
+		}, function(err) {
+			console.log("Error occurred");
+		});
+	} catch (exception) {
+		alert('<p>Error' + exception);
+	}
+});
+
 
 
 $('#btnnotify').on('click', function(e) {
@@ -114,32 +187,6 @@ $('#btnnotify').on('click', function(e) {
 				$('btnnotify').addClass("active");
 			}
 		});
-	}
-});
-
-$("#addbtn").on('click', function(e) {
-	try {
-		console.log("posting sample data");
-		OData.request({
-			requestUri : "/registry/Services",
-			method : "POST",
-			data : {
-				Id : $("#Id").val(),
-				Name : $("#Name").val(),
-				Url : $("#Url").val(),
-			}
-		}, function(insertedItem) {
-			$( "<tr serviceid="+insertedItem.Id+">"
-				+ "<td>" + insertedItem.Id + "</td>"
-				+ "<td>" + insertedItem.Name + "</td>"
-				+ "<td>" + insertedItem.Url + "</td>"
-				+ "<td><button class=\"btn btn-default\" onclick=\"removeService(\'"+insertedItem.Id+"\');\">-</button></td>"
-			+ "</tr>").appendTo($("#services > tbody"));			
-		}, function(err) {
-			console.log("Error occurred");
-		});
-	} catch (exception) {
-		alert('<p>Error' + exception);
 	}
 });
 
