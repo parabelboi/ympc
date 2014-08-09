@@ -1,37 +1,19 @@
 package service.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.olingo.odata2.api.annotation.edm.EdmEntitySet;
 import org.apache.olingo.odata2.api.annotation.edm.EdmEntityType;
-import org.apache.olingo.odata2.api.annotation.edm.EdmKey;
-import org.apache.olingo.odata2.api.annotation.edm.EdmProperty;
-import org.apache.olingo.odata2.api.annotation.edm.EdmType;
+import org.apache.olingo.odata2.api.annotation.edm.EdmNavigationProperty;
 
 @EdmEntityType(name = "Provider")
 @EdmEntitySet(name = "Providers")
-public class Provider {
-    @EdmKey
-    @EdmProperty(name = "Id", type = EdmType.STRING)
-    private String Id;
-    @EdmProperty(name = "Name")
-    private String Name;
+public class Provider extends Base {
+    @EdmNavigationProperty(name = "Services", toType = Service.class, association = "ServicesOfProvider")
+    private List<Service> services = new ArrayList<Service>();
     
     public Provider() {
         super();
-    }
-    
-    public String getId() {
-        return Id;
-    }
-    
-    public void setId(final String id) {
-        Id = id;
-    }
-    
-    public String getName() {
-        return Name;
-    }
-    
-    public void setName(final String name) {
-        Name = name;
     }
 }

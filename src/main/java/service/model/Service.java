@@ -8,12 +8,7 @@ import org.apache.olingo.odata2.api.annotation.edm.EdmType;
 
 @EdmEntityType(name = "Service")
 @EdmEntitySet(name = "Services")
-public class Service {
-    @EdmKey
-    @EdmProperty(name = "Id", type = EdmType.STRING)
-    private String Id;
-    @EdmProperty(name = "Name")
-    private String Name;
+public class Service extends Base {
     @EdmProperty(name = "Url")
     private String Url;
     
