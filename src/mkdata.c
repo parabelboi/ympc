@@ -34,6 +34,8 @@ const char* footer =
 static const char* get_mime(char* filename)
 {
     const char *extension = strrchr(filename, '.');
+    if(!extension)
+        return "text/plain";
     if(!strcmp(extension, ".js"))
         return "application/javascript";
     if(!strcmp(extension, ".css"))
