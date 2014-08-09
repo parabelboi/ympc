@@ -1,7 +1,7 @@
-/* jmpd
+/* ympc
    (c) 2013-2014 Andrew Karpow <andy@ndyk.de>
    (c) 2014 Christian Krafft <parabelboi@gmail.com>
-   This project's homepage is: http://www.jmpd.eu
+   This project's homepage is: http://www.ympc.eu
    
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ function getMetaData() {
 			OData.defaultMetadata.push(metadata);
 			$('.top-right').notify({
 				message : {
-					text : "connected to ympd"
+					text : "connected to ympc"
 				},
 				fadeOut : {
 					enabled : true,
