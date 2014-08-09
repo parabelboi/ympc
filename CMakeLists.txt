@@ -24,12 +24,26 @@ set(CMAKE_C_FLAGS_DEBUG "-ggdb -pedantic")
 
 file(GLOB RESOURCES 
 	RELATIVE ${PROJECT_SOURCE_DIR}
-	htdocs/js/*
-	htdocs/assets/*
-	htdocs/css/*.min.css
-	htdocs/css/*.css
-	htdocs/fonts/*
-	htdocs/registry/$metadata
+	htdocs/js/bootstrap.js
+	htdocs/js/bootstrap.min.js
+	htdocs/js/bootstrap-notify.js
+	htdocs/js/bootstrap-slider.js
+	htdocs/js/datajs-1.1.2.js
+	htdocs/js/datajs-1.1.2.min.js
+	htdocs/js/jquery.cookie.js
+	htdocs/js/jquery-1.10.2.js
+	htdocs/js/reg.js
+	htdocs/favicon.ico
+	htdocs/css/bootstrap.css
+	htdocs/css/bootstrap.min.css
+	htdocs/css/bootstrap-theme.css
+	htdocs/css/bootstrap-theme.min.css
+	htdocs/css/reg.css
+	htdocs/fonts/glyphicons-halflings-regular.eot
+	htdocs/fonts/glyphicons-halflings-regular.svg
+	htdocs/fonts/glyphicons-halflings-regular.ttf
+	htdocs/fonts/glyphicons-halflings-regular.woff
+	htdocs/registry/metadata
 	htdocs/index.html
 	htdocs/mycert.pem
 	htdocs/myreq.pem
